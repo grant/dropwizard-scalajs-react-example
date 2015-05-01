@@ -5,9 +5,9 @@ import sbt._
 import spray.revolver.RevolverPlugin._
 
 /**
- * Application settings. Configure the build for your application here.
- * You normally don't have to touch the actual build definition after this.
- */
+* Application settings. Configure the build for your application here.
+* You normally don't have to touch the actual build definition after this.
+*/
 object Settings {
   /** The name of your application */
   val name = "dropwizard-scalajs-react-example"
@@ -48,6 +48,7 @@ object Settings {
   val jvmDependencies = Def.setting(Seq(
     "io.dropwizard" % "dropwizard-core" % "0.8.1",
     "io.dropwizard" % "dropwizard-assets" % "0.8.1",
+    "com.typesafe.akka" %% "akka-actor" % "2.3.6",
     "io.spray" %% "spray-can" % "1.3.2",
     "io.spray" %% "spray-routing" % "1.3.2",
     "com.lihaoyi" %% "utest" % "0.3.0"
@@ -153,4 +154,6 @@ object ApplicationBuild extends Build {
     // use uTest framework for tests
     testFrameworks += new TestFramework("utest.runner.Framework")
   )
+
+  //packageArchetype.java_application
 }
