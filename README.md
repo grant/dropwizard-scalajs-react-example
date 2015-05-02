@@ -6,3 +6,13 @@ The ultimate combo: Scala Dropwizard + ScalaJS-React
 - ScalaJS
 - React
 - Heroku
+
+# How to run
+
+```sh
+git clone ...
+cd ...
+sbt
+```
+
+Just push to heroku to run.
