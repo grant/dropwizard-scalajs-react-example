@@ -1,14 +1,13 @@
-package sharkhacks5000.api
+package example.api
 
 import java.util
 
-import example.api.ApiConfiguration
-import io.dropwizard.Application
-import io.dropwizard.jetty.ConnectorFactory
-import io.dropwizard.setup.{Bootstrap, Environment}
 import example.api.health.ApiHealth
 import example.api.resources.{IndexResource, StatusResource}
+import io.dropwizard.Application
 import io.dropwizard.assets.AssetsBundle
+import io.dropwizard.jetty.ConnectorFactory
+import io.dropwizard.setup.{Bootstrap, Environment}
 
 /**
  * Runner for the API server.
