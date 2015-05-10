@@ -3,6 +3,7 @@ package example.client.components
 import example.models.SharedUserModel
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.all._
+import scalacss.ScalaCssReact._
 
 object ExampleComponent {
 
@@ -21,7 +22,7 @@ object ExampleComponent {
     .backend(new Backend(_))
     .render((props, state, backend) => {
     div(
-      h1(props.greeting + " " + props.user.name),
+      h1(ExampleComponentStyles.title, props.greeting + " " + props.user.name),
       h2(state.count + " click" + (if (state.count == 1) "" else "s")),
       button(onClick --> backend.plusOne(), "+1")
     )

@@ -71,9 +71,9 @@ object Build extends Build {
    */
   lazy val commonSettings = Seq(
     organization := "com." + Settings.appName,
-    version := Settings.Versions.app,
+    version := Versions.app,
     name := Settings.appName,
-    scalaVersion := Settings.Versions.scala,
+    scalaVersion:=Versions.scala,
     stage := stageTask
   )
 
@@ -112,6 +112,8 @@ object Build extends Build {
     lazy val clientDeps = Def.setting(Seq(
       "com.github.japgolly.scalajs-react" %%% "core" % Versions.scalajsReact,
       "com.github.japgolly.scalajs-react" %%% "extra" % Versions.scalajsReact,
+      "com.github.japgolly.scalacss" %%% "core" % Versions.scalacss,
+      "com.github.japgolly.scalacss" %%% "ext-react" % Versions.scalacss,
       "com.lihaoyi" %%% "scalarx" % Versions.scalarx,
       "com.lihaoyi" %%% "utest" % Versions.utest,
       "org.scala-js" %%% "scalajs-dom" % Versions.scalajsDom,
