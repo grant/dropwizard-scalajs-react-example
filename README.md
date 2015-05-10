@@ -12,7 +12,7 @@ The ultimate combo: Scala Dropwizard + ScalaJS-React
 ```sh
 git clone ...
 cd ...
-sbt
+sbt compile stage && foreman start
 ```
 
 Just push to heroku to run.

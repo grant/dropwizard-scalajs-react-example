@@ -48,13 +48,19 @@ object Build extends Build {
       .settings(commonSettings: _*)
       .aggregate(server)
 
+  lazy val shared =
+    project.in(file("shared"))
+      .settings(commonSettings: _*)
+
   lazy val client =
     project.in(file("client"))
+      .dependsOn(shared)
       .enablePlugins(ScalaJSPlugin)
       .settings(clientSettings: _*)
 
   lazy val server =
     project.in(file("server"))
+      .dependsOn(shared)
       .settings(serverSettings: _*)
 
   /**
@@ -84,11 +90,12 @@ object Build extends Build {
   lazy val clientSettings = commonSettings ++ Seq(
     name := s"$appName-client",
     libraryDependencies ++= Dependencies.clientDeps.value,
+    requiresDOM := true,
     jsDependencies += RuntimeDOM % "test"
   ) ++ sharedDirSettings
 
   lazy val sharedDirSettings = Seq(
-    unmanagedSourceDirectories in Compile += baseDirectory.value / "shared" / "main" / "scala"
+    unmanagedSourceDirectories in Compile += new File((baseDirectory.value / ".." / "shared" / "src/main/scala").getCanonicalPath)
   )
 
   /**
@@ -110,4 +117,5 @@ object Build extends Build {
       "be.doeraene" %%% "scalajs-jquery" % Versions.scalajsJQuery
     ))
   }
+
 }
