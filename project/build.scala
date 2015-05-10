@@ -3,9 +3,12 @@ import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 import sbt.Keys._
 import sbt._
 
+import Settings.Project._
+import Settings._
+
 object Build extends Build {
 
-  val appName = "dropwizard-scalajs-react-example"
+  val appName = Settings.appName
 
   /**
    * We will use this setting to direct the output of the ScalaJS compiler to the resources within the Play module.
@@ -15,7 +18,7 @@ object Build extends Build {
   /**
    * We will use this setting for the shared source directory
    */
-  val sharedScalaDir = file(".") / "shared" / "main" / "scala"
+  val sharedScalaDir = file(".") / Shared.toString / "src" / "main" / "scala"
 
   /**
    * Tasks
@@ -44,22 +47,22 @@ object Build extends Build {
    */
 
   lazy val root =
-    project.in(file("."))
+    project.in(file(Root.toString))
       .settings(commonSettings: _*)
       .aggregate(server)
 
   lazy val shared =
-    project.in(file("shared"))
+    project.in(file(Shared.toString))
       .settings(commonSettings: _*)
 
   lazy val client =
-    project.in(file("client"))
+    project.in(file(Client.toString))
       .dependsOn(shared)
       .enablePlugins(ScalaJSPlugin)
       .settings(clientSettings: _*)
 
   lazy val server =
-    project.in(file("server"))
+    project.in(file(Server.toString))
       .dependsOn(shared)
       .settings(serverSettings: _*)
 
@@ -67,16 +70,15 @@ object Build extends Build {
    * Project settings
    */
   lazy val commonSettings = Seq(
-    organization := "com.dropwizard-scalajs-react-example",
-    version := "1.0-SNAPSHOT",
-    name := "dropwizard-scalajs-react-example",
-    scalaVersion := "2.11.4",
+    organization := "com." + Settings.appName,
+    version := Settings.Versions.app,
+    name := Settings.appName,
+    scalaVersion := Settings.Versions.scala,
     stage := stageTask
   )
 
   lazy val serverSettings = commonSettings ++ Seq(
     name := s"$appName-server",
-    //    scalajsOutputDir := (classDirectory in Compile).value / "public" / "javascripts",
     scalajsOutputDir := (resourceDirectory in Compile).value / "generated",
     compile in Compile <<= (compile in Compile) dependsOn (fastOptJS in(client, Compile)) dependsOn copySourceMapsTask,
     stage <<= stage dependsOn (fullOptJS in(client, Compile)),
@@ -95,7 +97,7 @@ object Build extends Build {
   ) ++ sharedDirSettings
 
   lazy val sharedDirSettings = Seq(
-    unmanagedSourceDirectories in Compile += new File((baseDirectory.value / ".." / "shared" / "src/main/scala").getCanonicalPath)
+    unmanagedSourceDirectories in Compile += new File(sharedScalaDir.getAbsolutePath)
   )
 
   /**
@@ -103,15 +105,15 @@ object Build extends Build {
    */
   object Dependencies {
     lazy val serverDeps = Def.setting(Seq(
-      "io.dropwizard" % "dropwizard-core" % "0.8.1",
-      "io.dropwizard" % "dropwizard-assets" % "0.8.1"
+      "io.dropwizard" % "dropwizard-core" % Versions.dropwizard,
+      "io.dropwizard" % "dropwizard-assets" % Versions.dropwizard
     ))
 
     lazy val clientDeps = Def.setting(Seq(
-      "com.github.japgolly.scalajs-react" %%% "core" % "0.8.0",
-      "com.github.japgolly.scalajs-react" %%% "extra" % "0.8.0",
-      "com.lihaoyi" %%% "scalarx" % "0.2.7",
-      "com.lihaoyi" %%% "utest" % "0.3.0",
+      "com.github.japgolly.scalajs-react" %%% "core" % Versions.scalajsReact,
+      "com.github.japgolly.scalajs-react" %%% "extra" % Versions.scalajsReact,
+      "com.lihaoyi" %%% "scalarx" % Versions.scalarx,
+      "com.lihaoyi" %%% "utest" % Versions.utest,
       "org.scala-js" %%% "scalajs-dom" % Versions.scalajsDom,
       "com.lihaoyi" %%% "scalatags" % Versions.scalaTags,
       "be.doeraene" %%% "scalajs-jquery" % Versions.scalajsJQuery
