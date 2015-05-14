@@ -11,7 +11,7 @@ object Build extends Build {
   val appName = Settings.appName
 
   /**
-   * We will use this setting to direct the output of the ScalaJS compiler to the resources within the Play module.
+   * We will use this setting to direct the output of the ScalaJS compiler to the resources within Dropwizard.
    */
   val scalajsOutputDir = Def.settingKey[File]("directory for javascript files output by scalajs")
 
