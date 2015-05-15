@@ -7,6 +7,8 @@ The ultimate combo: Scala Dropwizard + ScalaJS-React
 - React
 - Heroku
 
+Works great with an IntelliJ setup.
+
 # How to run
 
 ```sh
